@@ -1,4 +1,5 @@
 import CryptoSubNav from './crypto-sub-nav'
+import TeamBuilder from '../team-building/container'
 export const newRoutes = {
   //. Crypto tab is driven by the sub nav on desktop
   cryptoRoot: {
@@ -7,4 +8,8 @@ export const newRoutes = {
   },
 }
 
-export const newModalRoutes = {}
+export const newModalRoutes = {
+  cryptoTeamBuilder: {
+    getScreen: (): typeof TeamBuilder => require('../team-building/container').default,
+  },
+}
