@@ -1,3 +1,4 @@
+import * as TeamBuildingConstants from './team-building'
 import * as Types from './types/crypto'
 
 export const encryptTab = 'encryptTab'
@@ -11,3 +12,7 @@ export const TabTitles: {[k in Types.CryptoSubTab]: Types.TabTitles} = {
   signTab: 'Sign',
   verifyTab: 'Verify',
 }
+export const makeState = (): Types.State => ({
+  teamBuilding: TeamBuildingConstants.makeSubState(),
+})
+

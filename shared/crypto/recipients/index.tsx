@@ -22,14 +22,15 @@ const Recipients = (props: Props) => (
         onFocus={props.onAddRecipients}
         style={styles.input}
       />
-
-      <Kb.Icon
-        type="iconfont-remove"
-        boxStyle={styles.removeRecipients}
-        fontSize={16}
-        color={Styles.globalColors.black_20}
-        onClick={props.onClearRecipients}
-      />
+      {props.recipients?.length && (
+        <Kb.Icon
+          type="iconfont-remove"
+          boxStyle={styles.removeRecipients}
+          fontSize={16}
+          color={Styles.globalColors.black_20}
+          onClick={props.onClearRecipients}
+        />
+      )}
     </Kb.Box2>
     <Kb.Divider style={{}} />
   </Kb.Box2>

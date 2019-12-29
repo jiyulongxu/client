@@ -3,7 +3,7 @@ import * as Kb from '../../common-adapters'
 import * as Styles from '../../styles'
 import OperationInput from '../input'
 import OperationOutput from '../output'
-import Recipients from '../recipients'
+import Recipients from '../recipients/container'
 
 const Encrypt = () => {
   return (

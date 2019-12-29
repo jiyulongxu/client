@@ -9,7 +9,5 @@ export const newRoutes = {
 }
 
 export const newModalRoutes = {
-  cryptoTeamBuilder: {
-    getScreen: (): typeof TeamBuilder => require('../team-building/container').default,
-  },
+  cryptoTeamBuilder: {getScreen: (): typeof TeamBuilder => require('../team-building/container').default},
 }
