@@ -8,7 +8,7 @@ export default Container.namedConnect(
     onAddRecipients: () => dispatch(appendEncryptRecipientsBuilder()),
     onClearRecipients: () => {},
   }),
-  (stateProps, dispatchProps, _) => ({
+  (_, dispatchProps) => ({
     onAddRecipients: dispatchProps.onAddRecipients,
     onClearRecipients: dispatchProps.onClearRecipients,
   }),
