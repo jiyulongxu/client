@@ -1,6 +1,7 @@
 package client
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/keybase/client/go/libkb"
@@ -13,15 +14,17 @@ type chatNotificationDisplay struct {
 	*baseNotificationDisplay
 	svc               *chatServiceHandler
 	showLocal         bool
+	showNewConvs      bool
 	hideExploding     bool
 	filtersNormalized []chat1.ConversationID
 }
 
-func newChatNotificationDisplay(g *libkb.GlobalContext, showLocal, hideExploding bool) *chatNotificationDisplay {
+func newChatNotificationDisplay(g *libkb.GlobalContext, showLocal, hideExploding, showNewConvs bool) *chatNotificationDisplay {
 	return &chatNotificationDisplay{
 		baseNotificationDisplay: newBaseNotificationDisplay(g),
 		showLocal:               showLocal,
 		hideExploding:           hideExploding,
+		showNewConvs:            showNewConvs,
 		svc:                     newChatServiceHandler(g),
 	}
 }
@@ -32,6 +35,14 @@ func newMsgNotification(source string) *chat1.MsgNotification {
 	return &chat1.MsgNotification{
 		Type:   notifTypeChat,
 		Source: source,
+	}
+}
+
+const notifTypeChatConv = "chat_conv"
+
+func newConvNotification() *chat1.ConvNotification {
+	return &chat1.ConvNotification{
+		Type: notifTypeChatConv,
 	}
 }
 
@@ -162,6 +173,17 @@ func (d *chatNotificationDisplay) NewChatActivity(ctx context.Context, arg chat1
 		notif.Error = msg.Error
 		notif.Pagination = inMsg.Pagination
 		d.printJSON(notif)
+	} else if d.showNewConvs && typ == chat1.ChatActivityType_NEW_CONVERSATION {
+		convInfo := activity.NewConversation()
+		notif := newConvNotification()
+		if convInfo.Conv == nil {
+			err := fmt.Sprintf("No conversation info found: %v", convInfo.ConvID.String())
+			notif.Error = &err
+		} else {
+			conv := convInfo.Conv.ExportToSummary()
+			notif.Conv = &conv
+		}
+		d.printJSON(notif)
 	}
 	return nil
 }
@@ -182,7 +204,7 @@ func (d *chatNotificationDisplay) ChatThreadsStale(context.Context, chat1.ChatTh
 func (d *chatNotificationDisplay) ChatTypingUpdate(context.Context, []chat1.ConvTypingUpdate) error {
 	return nil
 }
-func (d *chatNotificationDisplay) ChatJoinedConversation(context.Context, chat1.ChatJoinedConversationArg) error {
+func (d *chatNotificationDisplay) ChatJoinedConversation(ctx context.Context, arg chat1.ChatJoinedConversationArg) error {
 	return nil
 }
 func (d *chatNotificationDisplay) ChatLeftConversation(context.Context, chat1.ChatLeftConversationArg) error {
