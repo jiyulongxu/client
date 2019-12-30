@@ -32,7 +32,7 @@ const Recipients = (props: Props) => (
         />
       )}
     </Kb.Box2>
-    <Kb.Divider style={{}} />
+    <Kb.Divider />
   </Kb.Box2>
 )
 

@@ -8,13 +8,15 @@ type Props = {
 
 const Input = (props: Props) => {
   return (
-    <Kb.Box2 direction="vertical" fullWidth={true} fullHeight={true}>
+    <Kb.Box2 direction="vertical" fullWidth={true} fullHeight={true} style={styles.container}>
       <Kb.NewInput
         multiline={true}
-        autoFocus={true}
+        autoFocus={false}
         hideBorder={true}
+        growAndScroll={true}
+        padding="tiny"
         placeholder={props.placeholder}
-        containerStyle={styles.inputStyle}
+        containerStyle={styles.inputContainer}
       />
     </Kb.Box2>
   )
@@ -23,8 +25,13 @@ const Input = (props: Props) => {
 const styles = Styles.styleSheetCreate(
   () =>
     ({
-      inputStyle: {
+      container: {
+        ...Styles.globalStyles.flexGrow,
+      },
+      inputContainer: {
+        // We want the immediate container not to overflow, so we tell it be height: 100% to match the parent
         ...Styles.globalStyles.fullHeight,
+        alignItems: 'stretch',
       },
     } as const)
 )
