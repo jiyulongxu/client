@@ -1,4 +1,4 @@
-import commonTeamBuildingSaga, {filterForNs} from './team-building'
+import commonTeamBuildingSaga from './team-building'
 
 function* teamBuildingSaga() {
   yield* commonTeamBuildingSaga('crypto')

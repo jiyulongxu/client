@@ -46,15 +46,6 @@ export const appendNewTeamBuilder = (teamID: TeamTypes.TeamID) =>
 
 export const appendEncryptRecipientsBuilder = () =>
   RouteTreeGen.createNavigateAppend({
-    path: [
-      {
-        props: {
-          filterServices: ['keybase'],
-          namespace: 'crypto',
-          title: 'Encrypt',
-        },
-        selected: 'cryptoTeamBuilder',
-      },
-    ],
+    path: [{props: {namespace: 'crypto', title: 'Encrypt'}, selected: 'cryptoTeamBuilder'}],
   })
 

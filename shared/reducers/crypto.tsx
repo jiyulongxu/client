@@ -14,7 +14,6 @@ export default Container.makeReducer<Actions, Types.State>(initialState, {
   ...teamBuilderReducerCreator<Types.State>(
     (draftState: Container.Draft<Types.State>, action: TeamBuildingGen.Actions) => {
       const val = editTeambuildingDraft('crypto', draftState.teamBuilding, action)
-      console.log('JRY crypto reducer team building', {action, draftState, val})
       if (val !== undefined) {
         draftState.teamBuilding = val
       }
